@@ -12,9 +12,13 @@
 3，使用方法：
 
     XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
+    
     playerManager.sourceImagesContainerView = self; ／／ 当前的view
+    
     playerManager.currentImage = sender.currentImage;  ／／ 当前的图片
+    
     playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
+    
     [playerManager show];
 
 
@@ -23,15 +27,19 @@
 @interface XMPlayerManager : UIView
 
 /** 当前图片 */
+
 @property (nonatomic,strong) UIImage *currentImage;
 
 /** 视频地址 */
+
 @property (nonatomic, copy) NSString *videourl;
 
 /** 当前容器的View */
+
 @property (nonatomic, weak) UIView *sourceImagesContainerView;
 
 /*** 显示*/
+
 - (void)show;
 
 @end
