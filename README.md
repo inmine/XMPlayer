@@ -58,7 +58,7 @@
 
 1，如果您发现了bug请尽可能详细地描述系统版本、手机型号和复现步骤等信息 提一个issue.
 
-2，我的简书http://www.jianshu.com/writer#/notebooks/18133690/notes/19112815
+2，我的简书http://www.jianshu.com/p/6e82fd2fcb01
  
 3，保存视频以及支持横竖屏等其他新功能正在添加中。。。。
  
