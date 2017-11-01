@@ -1,4 +1,5 @@
 # XMPlayer
 模仿微信短视频播放
 
-![Platform](http://120.25.226.186:32812/resources/images/minion_08.png)
+![Platform](https://wx2.sinaimg.cn/mw690/e067b31fgy1fl2n8bfvhtj20v91vonjm.jpg)
+![Platform](https://wx4.sinaimg.cn/mw690/e067b31fgy1fl2n8f5hmxj20v91vodr1.jpg)
