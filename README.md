@@ -11,15 +11,15 @@
 
 3，使用方法：
 ```
-    XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
+XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
     
-    playerManager.sourceImagesContainerView = self; ／／ 当前的view
+playerManager.sourceImagesContainerView = self; ／／ 当前的view
     
-    playerManager.currentImage = sender.currentImage;  ／／ 当前的图片
+playerManager.currentImage = sender.currentImage;  ／／ 当前的图片
     
-    playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
+playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
     
-    [playerManager show];
+[playerManager show];
 ```
 
 # 二，主要属性
