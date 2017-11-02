@@ -10,7 +10,7 @@
 2，引用#import "XMPlayer.h"头文件
 
 3，使用方法：
-
+```
     XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
     
     playerManager.sourceImagesContainerView = self; ／／ 当前的view
@@ -20,10 +20,10 @@
     playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
     
     [playerManager show];
-
+```
 
 # 二，主要属性
- 
+```
 @interface XMPlayerManager : UIView
 
 /** 当前图片 */
@@ -43,6 +43,7 @@
  - (void)show;
 
 @end
+```
 
 # 三，注意事项
 
