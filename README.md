@@ -110,7 +110,7 @@ playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
 
 3，长按视频下载
 
-4，宏定义在XMPlayerConfig中
+4，宏定义在XMPlayerConfig中，可修改
 
 5，暂时没有找到竖直方向的视频，如果谁有，可以发到我的简书里，或者写在issue中，谢谢，简书地址在下面
 
