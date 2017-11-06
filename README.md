@@ -18,6 +18,8 @@ playerManager.sourceImagesContainerView = (UIView *)sender; // 当前的View
 
 playerManager.currentImage = sender.currentImage;  // 当前的图片
 
+ // playerManager.isAllowDownload = NO; // 不允许下载视频
+
 playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当前的视频URL
 
 [playerManager show];
@@ -46,6 +48,13 @@ playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当
  *
  **/
 @property (nonatomic, weak) UIView *sourceImagesContainerView;
+
+/**
+ * 是否允许下载视频
+ *
+ * 默认YES 
+ **/
+@property (nonatomic, assign) BOOL isAllowDownload;
 
 /**
  * 显示
