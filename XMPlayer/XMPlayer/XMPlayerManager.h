@@ -10,17 +10,28 @@
 
 @interface XMPlayerManager : UIView
 
-/** 当前图片 */
+/**
+ * 当前图片
+ *
+**/
 @property (nonatomic,strong) UIImage *currentImage;
 
-/** 视频地址 */
-@property (nonatomic, copy) NSString *videourl;
+/**
+ * 视频URL地址
+ *
+ * 支持网络视频，本地相册视频
+ **/
+@property (nonatomic,strong) NSURL *videoURL;
 
-/** 当前容器的View */
+/**
+ * 当前容器的View
+ *
+ **/
 @property (nonatomic, weak) UIView *sourceImagesContainerView;
 
-/***
+/**
  * 显示
+ *
  */
 - (void)show;
 

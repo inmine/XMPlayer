@@ -6,12 +6,27 @@
 //  Copyright © 2017年 min. All rights reserved.
 //
 
+
+// https://github.com/inmine/XMPlayer.git
+
 #import "XMRefreshView.h"
 #import "XMPlayerConfig.h"
+
+#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
+#define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
+#define STROKE_END_RADIAN 180/RADIANS_TO_DEGREES(M_PI)
+#define STROKE_PROCESS_RADIAN(angle) angle/RADIANS_TO_DEGREES(M_PI)
+static const float DRAW_LINE_RATE = 7.5; // 画线速率
+static const float RECURRENT = 4; // 周期
+static const float RADIUS_NONE = 15; // 无logo半径
+static const float RADIUS_LOGO = 32.5; // logo半径
+static const float STROKE_STEP = 170; // 一圈
+static const float DRAW_LING_ROTATE = M_PI_4;
 
 @interface XMSpinnerRing : CAShapeLayer
 
 - (instancetype)initWithFrame:(CGRect)frame;
+
 + (instancetype)layerWithFrame:(CGRect)frame;
 
 @end
@@ -29,7 +44,7 @@
         
         self.lineWidth = RING_LINE_WIDTH;
         self.fillColor = [UIColor clearColor].CGColor;
-        self.strokeColor = RING_COLOR;
+        self.strokeColor = XMRefreshColor;
         self.lineCap = kCALineCapRound;
     }
     return self;
@@ -47,13 +62,23 @@
 
 @interface XMRefreshView ()
 
-@property(nonatomic, strong)CALayer *container; // 容器
-@property(nonatomic, strong)XMSpinnerRing *layerLeft; // 左圆弧
-@property(nonatomic, strong)XMSpinnerRing *layerRight; // 右圆弧
-@property(nonatomic, strong)UIImageView *logoImage; // logo图
-@property(nonatomic, strong)CABasicAnimation *strokeEndAnimation;
-@property(nonatomic, strong)CABasicAnimation *rotateAnimation;
-@property(nonatomic, assign)RefreshLogo logoStyle;
+/** 容器 */
+@property(nonatomic, strong) CALayer *container;
+
+/** 左圆弧 */
+@property(nonatomic, strong) XMSpinnerRing *layerLeft;
+
+/** 右圆弧 */
+@property(nonatomic, strong) XMSpinnerRing *layerRight;
+
+/** logo图 */
+@property(nonatomic, strong) UIImageView *logoImage;
+
+@property(nonatomic, strong) CABasicAnimation *strokeEndAnimation;
+
+@property(nonatomic, strong) CABasicAnimation *rotateAnimation;
+
+@property(nonatomic, assign) RefreshLogo logoStyle;
 
 @end
 

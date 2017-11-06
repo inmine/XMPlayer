@@ -7,14 +7,13 @@
 //
 
 #import "XMPlayerTableViewCell.h"
-#import "XMImgView.h"
 #import "XMPlayerModel.h"
 #import "XMPlayer.h"
 
 @interface XMPlayerTableViewCell ()
 
-/** 图片View */
-@property (nonatomic,strong) XMImgView *imgView;
+/** 图片按钮 */
+@property (nonatomic,strong) UIButton *imgPlayBtn;
 
 @end
 
@@ -44,9 +43,9 @@
         
         self.backgroundColor = [UIColor whiteColor];
         
-        _imgView = [[XMImgView alloc] init];
-        _imgView.backgroundColor = [UIColor whiteColor];
-        [self addSubview:_imgView];
+        _imgPlayBtn = [[UIButton alloc] init];
+        [_imgPlayBtn addTarget:self action:@selector(btnPlayClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_imgPlayBtn];
         
         UILabel *lineLabel = [[UILabel alloc] init];
         lineLabel.backgroundColor = XMRGBColor(230, 230, 230);
@@ -57,14 +56,42 @@
     return self;
 }
 
+- (void)layoutSubviews{
+    
+    
+    _imgPlayBtn.width = self.playerModel.img_w;
+    _imgPlayBtn.height = self.playerModel.img_h;
+    _imgPlayBtn.x = (WIDTH - _imgPlayBtn.width)/2.0;
+    _imgPlayBtn.y = ([self.playerModel cellHeight] - _imgPlayBtn.height)/2.0;
+    
+    
+    UIImageView *playImgView = [[UIImageView alloc] init];
+    playImgView.image = [UIImage imageNamed:@"play.png"];
+    playImgView.width = playImgView.height = 44;
+    playImgView.x = (_imgPlayBtn.width - playImgView.width)/2.0;
+    playImgView.y = (_imgPlayBtn.height - playImgView.height)/2.0;
+    [_imgPlayBtn addSubview:playImgView];
+}
+
 - (void)setPlayerModel:(XMPlayerModel *)playerModel{
     
     _playerModel = playerModel;
     
-    _imgView.playerModel = playerModel;
+    NSURL *url = [NSURL URLWithString:playerModel.imgurl];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    // 这里最好用SDWebImage框架加载图片
+    [_imgPlayBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+}
+
+// 点击播放
+- (void)btnPlayClick:(UIButton *)sender{
     
-    _imgView.frame = CGRectMake(0, 0,WIDTH, playerModel.img_h + 20);
-    
+    //    NSLog(@"点击播放");
+    XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
+    playerManager.sourceImagesContainerView = (UIView *)sender;
+    playerManager.currentImage = sender.currentImage;
+    playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl];
+    [playerManager show];
 }
 
 @end

@@ -6,6 +6,9 @@
 //  Copyright © 2017年 min. All rights reserved.
 //
 
+
+// https://github.com/inmine/XMPlayer.git
+
 #import "XMPlayerConfig.h"
 #import "XMPlayerManager.h"
 #import "UIView+Extension.h"

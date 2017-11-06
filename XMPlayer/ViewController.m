@@ -45,6 +45,12 @@
                          },
                        @{
                            @"img_w":@(200),
+                           @"img_h":@(122.54),
+                           @"imgurl":@"https://wx3.sinaimg.cn/mw690/e067b31fgy1fl2n55uh8dj20zg0jy1kx.jpg",
+                           @"videourl":@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"
+                           },
+                       @{
+                           @"img_w":@(200),
                            @"img_h":@(112),
                            @"imgurl":@"http://120.25.226.186:32812/resources/images/minion_08.png",
                            @"videourl":@"http://120.25.226.186:32812/resources/videos/minion_02.mp4"

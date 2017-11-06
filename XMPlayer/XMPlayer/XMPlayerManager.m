@@ -6,17 +6,26 @@
 //  Copyright © 2017年 min. All rights reserved.
 //
 
+
+// https://github.com/inmine/XMPlayer.git
+
 #import "XMPlayerManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import "XMPlayerConfig.h"
 #import "UIView+Extension.h"
 #import "XMRefreshView.h"
+#import "XMProgress.h"
+/**
+ * 视频下载基于AFNetworking框架
+ * 如果不需要下载功能，或者未使用AFNetworking框架，可以删除相应的代码
+ **/
+#import "AFNetworking.h"
 
 @interface XMPlayerManager () {
     
-        AVPlayer *player;
-        AVPlayerItem *playerItem;
-        AVPlayerLayer *avplayerLayer;
+    AVPlayer *_player;
+    AVPlayerItem *_playerItem;
+    AVPlayerLayer *_avplayerLayer;
 }
 
 /** 背景view */
@@ -31,9 +40,142 @@
 /** 是否已经显示 */
 @property (nonatomic, assign) BOOL hasShowedFistView;
 
+/** 蒙版 */
+@property (nonatomic,strong) UIButton *mengbanView;
+
+/** 保存View */
+@property (nonatomic,strong) UIView *saveView;
+
+/** 进度 */
+@property (nonatomic,strong) XMProgress *progressView;
+
+/** 下载 */
+@property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;
+
 @end
 
 @implementation XMPlayerManager
+
+- (XMProgress *)progressView{
+    if (_progressView == nil) {
+        
+        _progressView = [[XMProgress alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
+        _progressView.hidden = YES;
+        [_BGView addSubview:_progressView];
+        
+    }
+    return _progressView;
+}
+    
+- (NSURLSessionDownloadTask *)downloadTask{
+    
+    if (!_downloadTask) {
+        
+        AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.videoURL];
+        
+        _downloadTask=[session downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+            
+            // 下载进度
+//            NSLog(@"下载进度 %@",downloadProgress);
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                
+                self.progressView.progress = downloadProgress.fractionCompleted;
+            }];
+            
+        } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+            
+            //下载到哪个文件夹
+            NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+            
+            NSString *fileName = [cachePath stringByAppendingPathComponent:response.suggestedFilename];
+            
+            return [NSURL fileURLWithPath:fileName];
+            
+        } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+            
+            //下载完成了
+//            NSLog(@"下载完成了 %@",filePath);
+            self.progressView.hidden = YES;
+            
+            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([filePath path])) {
+                
+                // 视频保存相册核心代码
+                UISaveVideoAtPathToSavedPhotosAlbum([filePath path], nil, nil, nil);
+                
+            }
+        }];
+    }
+    
+    return _downloadTask;
+}
+
+- (UIButton *)mengbanView{
+    
+    if (_mengbanView == nil) {
+        
+        // 蒙版
+        _mengbanView = [[UIButton alloc] init];
+        _mengbanView.frame = self.bounds;
+        _mengbanView.hidden = YES;
+        _mengbanView.backgroundColor = [UIColor blackColor];
+        _mengbanView.alpha = 0;
+        [_mengbanView addTarget:self action:@selector(mengbanViewClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_mengbanView];
+        
+        // 保存View
+        _saveView = [[UIView alloc] init];
+        _saveView.backgroundColor = XMRGBColor(247, 247, 247);
+        [self addSubview:_saveView];
+        
+        if (HEIGHT == 812) { // iphone X
+            
+            _saveView.frame = CGRectMake(0, HEIGHT, WIDTH , 106 + 36);
+        }else{
+            _saveView.frame = CGRectMake(0, HEIGHT, WIDTH , 106);
+        }
+        
+        // 保存Btn
+        UIButton *saveBtn = [[UIButton alloc] init];
+        saveBtn.frame = CGRectMake(0, 0, WIDTH, 50);
+        saveBtn.backgroundColor = [UIColor whiteColor];
+        [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [saveBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        saveBtn.titleLabel.font = XM18Font;
+        [saveBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
+        [_saveView addSubview:saveBtn];
+        
+        // 取消Btn
+        UIButton *canleBtn = [[UIButton alloc] init];
+        canleBtn.frame = CGRectMake(0, 56, WIDTH, 50);
+        canleBtn.backgroundColor = [UIColor whiteColor];
+        [canleBtn setTitle:@"取消" forState:UIControlStateNormal];
+        [canleBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        canleBtn.titleLabel.font = XM18Font;
+        [canleBtn addTarget:self action:@selector(mengbanViewClick) forControlEvents:UIControlEventTouchUpInside];
+        [_saveView addSubview:canleBtn];
+    }
+    
+    return  _mengbanView;
+}
+    
+    
+- (void)mengbanViewClick{
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        
+        self.mengbanView.alpha = 0;
+        _saveView.y = HEIGHT;
+        
+    } completion:^(BOOL finished) {
+        
+        _saveView.hidden = YES;
+        self.mengbanView.hidden = YES;
+    }];
+    
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -67,7 +209,6 @@
     
     // 添加视频
     [self addVideo];
-    
 }
 
 #pragma mark - 重新布局
@@ -117,8 +258,67 @@
     }];
 }
 
-#pragma mark - 点击退出播放
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+#pragma mark - 添加视频播放器
+- (void)addVideo{
+    
+    //1 创建AVPlayerItem
+    AVPlayerItem *playerItem = [[AVPlayerItem alloc]initWithURL:self.videoURL];
+    //2.把AVPlayerItem放在AVPlayer上
+    _player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+    //3 再把AVPlayer放到 AVPlayerLayer上
+    _avplayerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+    _avplayerLayer.videoGravity = AVLayerVideoGravityResizeAspect;//视频填充模式
+    _avplayerLayer.frame = _BGView.bounds;
+    _avplayerLayer.delegate = self;
+
+    //4 最后把 AVPlayerLayer放到self.view.layer上(也就是需要放置的视图的layer层上)
+    [_BGView.layer addSublayer:_avplayerLayer];
+    
+    
+    CGFloat w = 40;
+    CGFloat x = (_BGView.width - w)/2.0;
+    CGFloat y = (_BGView.height - w)/2.0;
+    self.refreshView = [XMRefreshView refreshViewWithFrame:CGRectMake(x, y, w, w) logoStyle:RefreshLogoNone];
+    [_BGView addSubview:self.refreshView];
+    [self.refreshView startAnimation];
+    
+    /**以上是基本的播放界面，但是没有前进后退**/
+    //观察是否播放，KVO进行观察，观察playerItem.status
+    [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    [playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+    [playerItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+    [playerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+    [playerItem addObserver:self forKeyPath:@"playbackBufferFull" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished) name:AVPlayerItemDidPlayToEndTimeNotification object:_player.currentItem];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFailed2) name:AVPlayerItemFailedToPlayToEndTimeNotification object:_player.currentItem];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFailed) name:AVPlayerItemFailedToPlayToEndTimeErrorKey object:_player.currentItem];
+    
+    //创建手势对象
+    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
+    //配置属性
+    //轻拍次数
+    tap.numberOfTapsRequired =1;
+//    //轻拍手指个数
+//    tap.numberOfTouchesRequired =1;
+    //讲手势添加到指定的视图上
+    [self addGestureRecognizer:tap];
+    
+    // 长按
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(processgestureReconizer:)];
+    longPress.minimumPressDuration = 1.0;
+    [self addGestureRecognizer:longPress];
+    
+}
+    
+// 单击
+- (void)tapAction{
+    
+    // 停止下载
+    [self.downloadTask suspend];
     
     UIView *sourceView = [self.sourceImagesContainerView.subviews firstObject];
 
@@ -142,70 +342,28 @@
         [_BGView removeFromSuperview];
 //        [self removeFromSuperview];
     }];
-    
-}
-
-#pragma mark - 添加视频播放器
-- (void)addVideo{
-    
-    //1 创建AVPlayerItem
-    AVPlayerItem *playerItem = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:self.videourl]];
-    //2.把AVPlayerItem放在AVPlayer上
-    player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-    //3 再把AVPlayer放到 AVPlayerLayer上
-    avplayerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
-    avplayerLayer.videoGravity = AVLayerVideoGravityResizeAspect;//视频填充模式
-    avplayerLayer.frame = _BGView.bounds;
-    avplayerLayer.delegate = self;
-
-    //4 最后把 AVPlayerLayer放到self.view.layer上(也就是需要放置的视图的layer层上)
-    [_BGView.layer addSublayer:avplayerLayer];
-    
-//    // 播放
-//    [player play];
-    
-    CGFloat w = 40;
-    CGFloat x = (_BGView.width - w)/2.0;
-    CGFloat y = (_BGView.height - w)/2.0;
-    self.refreshView = [XMRefreshView refreshViewWithFrame:CGRectMake(x, y, w, w) logoStyle:RefreshLogoNone];
-    [_BGView addSubview:self.refreshView];
-    [self.refreshView startAnimation];
-    
-    /**以上是基本的播放界面，但是没有前进后退**/
-    //观察是否播放，KVO进行观察，观察playerItem.status
-    [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-    [playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
-    [playerItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
-    [playerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
-    [playerItem addObserver:self forKeyPath:@"playbackBufferFull" options:NSKeyValueObservingOptionNew context:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFailed2) name:AVPlayerItemFailedToPlayToEndTimeNotification object:player.currentItem];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFailed) name:AVPlayerItemFailedToPlayToEndTimeErrorKey object:player.currentItem];
-    
 }
 
 // 播放结束
 - (void)playbackFinished{
     
     // 播放结束重复播放
-    [player seekToTime:CMTimeMake(0, 1)];
-    [player play];
+    [_player seekToTime:CMTimeMake(0, 1)];
+    [_player play];
     
 }
 
 // 播放失败
 -(void)playFailed2{
     
-    [player pause];
+    [_player pause];
     // 结束刷新
     [self endAnimation];
 }
 
 -(void)playFailed{
     
-    [player pause];
+    [_player pause];
     // 结束刷新
     [self endAnimation];
 }
@@ -234,7 +392,7 @@
             
 //            NSLog(@"AVPlayerStatusFailed");
             
-            [player pause];
+            [_player pause];
             
             // 结束刷新
             [self endAnimation];
@@ -243,7 +401,7 @@
             
 //            NSLog(@"AVPlayerStatusUnknown");
             
-            [player pause];
+            [_player pause];
             // 结束刷新
             [self endAnimation];
         }
@@ -262,7 +420,7 @@
     } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) { //监听播放器在缓冲数据的状态
         
 //        NSLog(@"缓冲不足暂停了");
-        [player pause];
+        [_player pause];
         [self startAnimation];
          
     } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
@@ -273,7 +431,7 @@
         // 结束刷新
         [self endAnimation];
         // 播放
-        [player play];
+        [_player play];
         
     } else if ([keyPath isEqualToString:@"playbackBufferFull"]) {
         
@@ -293,16 +451,16 @@
 // 移除播放器
 - (void)removePlayer{
     
-    [player pause];
-    [player setRate:0];
-    [player.currentItem removeObserver:self forKeyPath:@"status" context:nil];
-    [player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges" context:nil];
-    [player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty" context:nil];
-    [player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp" context:nil];
-    [player.currentItem removeObserver:self forKeyPath:@"playbackBufferFull" context:nil];
-    [player replaceCurrentItemWithPlayerItem:nil];
-    playerItem = nil;
-    player = nil;
+    [_player pause];
+    [_player setRate:0];
+    [_player.currentItem removeObserver:self forKeyPath:@"status" context:nil];
+    [_player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges" context:nil];
+    [_player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty" context:nil];
+    [_player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp" context:nil];
+    [_player.currentItem removeObserver:self forKeyPath:@"playbackBufferFull" context:nil];
+    [_player replaceCurrentItemWithPlayerItem:nil];
+    _playerItem = nil;
+    _player = nil;
 }
 
 // 开始旋转
@@ -319,33 +477,37 @@
     self.refreshView.hidden = YES;
 }
 
-// videoPath为视频下载到本地之后的本地路径
-- (void)saveVideo:(NSString *)videoPath{
-    
-//    if (_videoPath) {
-//
-//        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([_videoPath path])) {
-//            //保存相册核心代码
-//            UISaveVideoAtPathToSavedPhotosAlbum([_videoPath path], self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
-//        }
-//
-//    }
-    
+#pragma mark 长按手势
+- (void)processgestureReconizer:(UIGestureRecognizer *)gesture {
+
+    _saveView.hidden = NO;
+    self.mengbanView.hidden = NO;
+
+    [UIView animateWithDuration:0.2 animations:^{
+
+        self.mengbanView.alpha = 0.5;
+        
+        if (HEIGHT == 812) { // iphone X
+            
+            _saveView.y = HEIGHT - (106 + 36);
+        }else{
+            _saveView.y = HEIGHT - 106;
+        }
+    }];
 }
 
-//保存视频完成之后的回调
-- (void) savedPhotoImage:(UIImage*)image didFinishSavingWithError: (NSError *)error contextInfo: (void *)contextInfo {
+- (void)saveImage{
+
+//    XMLog(@"保存");
+
+    [self mengbanViewClick];
     
-    if (error) {
-        
-        NSLog(@"保存视频失败%@", error.localizedDescription);
-        
-    }else {
-        
-        NSLog(@"保存视频成功");
-    }
+    // 开始下载
+    [self.downloadTask resume];
     
+    self.progressView.hidden = NO;
 }
+
 
 
 @end

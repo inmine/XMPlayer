@@ -6,6 +6,9 @@
 //  Copyright © 2017年 min. All rights reserved.
 //
 
+
+// https://github.com/inmine/XMPlayer.git
+
 #import "UIView+Extension.h"
 
 @implementation UIView (Extension)
