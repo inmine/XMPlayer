@@ -58,7 +58,6 @@
 
 - (void)layoutSubviews{
     
-    
     _imgPlayBtn.width = self.playerModel.img_w;
     _imgPlayBtn.height = self.playerModel.img_h;
     _imgPlayBtn.x = (WIDTH - _imgPlayBtn.width)/2.0;
@@ -90,6 +89,8 @@
     XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
     playerManager.sourceImagesContainerView = (UIView *)sender;  // 当前的View
     playerManager.currentImage = sender.currentImage;  // 当前的图片
+//    playerManager.isAllowDownload = NO; // 不允许下载视频
+//    playerManager.isAllowCyclePlay = NO;  // 不循环播放
     playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl];  // 当前的视频URL
     [playerManager show];
 }

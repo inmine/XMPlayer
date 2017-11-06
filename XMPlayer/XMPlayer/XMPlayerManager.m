@@ -186,6 +186,8 @@
         
         // 默认允许下载视频
         self.isAllowDownload = YES;
+        // 默认允许循环播放
+        self.isAllowCyclePlay = YES;
         
     }
     return self;
@@ -352,10 +354,17 @@
 // 播放结束
 - (void)playbackFinished{
     
-    // 播放结束重复播放
-    [_player seekToTime:CMTimeMake(0, 1)];
-    [_player play];
-    
+    if (self.isAllowCyclePlay ==  YES) {
+        
+        // 播放结束重复播放
+        [_player seekToTime:CMTimeMake(0, 1)];
+        [_player play];
+        
+    }else{
+        
+        // 退出播放
+        [self tapAction];
+    }
 }
 
 // 播放失败

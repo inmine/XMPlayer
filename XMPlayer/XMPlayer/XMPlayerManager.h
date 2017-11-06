@@ -39,6 +39,13 @@
 @property (nonatomic, assign) BOOL isAllowDownload;
 
 /**
+ * 是否允许视频循环播放
+ *
+ * 默认YES
+ **/
+@property (nonatomic, assign) BOOL isAllowCyclePlay;
+
+/**
  * 显示
  *
  */
