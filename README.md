@@ -108,7 +108,7 @@ playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当
 
 2，整个方法在demo中在XMPlayerTableViewCell实现
 
-3，长按视频下载
+3，长按视频下载，视频下载基于AFNetworking框架，如果不需要下载功能，或者未使用AFNetworking框架，可以删除相应的代码
 
 4，宏定义在XMPlayerConfig中，可修改
 
