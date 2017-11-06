@@ -88,9 +88,9 @@
     
     //    NSLog(@"点击播放");
     XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
-    playerManager.sourceImagesContainerView = (UIView *)sender;
-    playerManager.currentImage = sender.currentImage;
-    playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl];
+    playerManager.sourceImagesContainerView = (UIView *)sender;  // 当前的View
+    playerManager.currentImage = sender.currentImage;  // 当前的图片
+    playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl];  // 当前的视频URL
     [playerManager show];
 }
 

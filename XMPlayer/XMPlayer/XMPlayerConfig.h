@@ -7,7 +7,7 @@
 //
 
 
-// https://github.com/inmine/XMPlayer.git
+// 项目github地址: https://github.com/inmine/XMPlayer.git
 
 /**************** 宏定义 ***********************/
 // 输出

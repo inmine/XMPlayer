@@ -7,7 +7,7 @@
 //
 
 
-// https://github.com/inmine/XMPlayer.git
+// 项目github地址: https://github.com/inmine/XMPlayer.git
 
 #import "XMPlayerManager.h"
 #import <AVFoundation/AVFoundation.h>
@@ -184,6 +184,9 @@
         
         self.backgroundColor = [UIColor blackColor];
         
+        // 默认允许下载视频
+        self.isAllowDownload = YES;
+        
     }
     return self;
 }
@@ -305,13 +308,15 @@
     //讲手势添加到指定的视图上
     [self addGestureRecognizer:tap];
     
-    // 长按
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
-                                               initWithTarget:self
-                                               action:@selector(processgestureReconizer:)];
-    longPress.minimumPressDuration = 1.0;
-    [self addGestureRecognizer:longPress];
-    
+    if (self.isAllowDownload == YES) {
+        
+        // 长按
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                                   initWithTarget:self
+                                                   action:@selector(processgestureReconizer:)];
+        longPress.minimumPressDuration = 1.0;
+        [self addGestureRecognizer:longPress];
+    }
 }
     
 // 单击

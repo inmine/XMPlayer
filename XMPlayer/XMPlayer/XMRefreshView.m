@@ -6,8 +6,7 @@
 //  Copyright © 2017年 min. All rights reserved.
 //
 
-
-// https://github.com/inmine/XMPlayer.git
+// 项目github地址: https://github.com/inmine/XMPlayer.git
 
 #import "XMRefreshView.h"
 #import "XMPlayerConfig.h"

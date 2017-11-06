@@ -6,6 +6,8 @@
 //  Copyright © 2017年 min. All rights reserved.
 //
 
+// 项目github地址: https://github.com/inmine/XMPlayer.git
+
 #import <UIKit/UIKit.h>
 
 @interface XMProgress : UIView
