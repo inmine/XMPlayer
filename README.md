@@ -19,6 +19,8 @@ playerManager.sourceImagesContainerView = (UIView *)sender; // 当前的View
 playerManager.currentImage = sender.currentImage;  // 当前的图片
 
  // playerManager.isAllowDownload = NO; // 不允许下载视频
+ 
+//    playerManager.isAllowCyclePlay = NO;  // 不循环播放
 
 playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当前的视频URL
 
@@ -55,6 +57,13 @@ playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当
  * 默认YES 
  **/
 @property (nonatomic, assign) BOOL isAllowDownload;
+
+/**
+ * 是否允许视频循环播放
+ *
+ * 默认YES
+ **/
+@property (nonatomic, assign) BOOL isAllowCyclePlay;
 
 /**
  * 显示
