@@ -2,7 +2,8 @@
 模仿微信短视频播放
 
 ![Platform](https://wx4.sinaimg.cn/mw690/e067b31fgy1fl2nfwkfgwj208c0i2acj.jpg)
-![Platform](https://wx4.sinaimg.cn/mw690/e067b31fgy1fl2nfwjhbqj208c0i2q4j.jpg)
+![Platform](https://wx3.sinaimg.cn/mw690/e067b31fgy1fl8e7qo5tcj208c0i2jt3.jpg)
+![Platform](https://wx3.sinaimg.cn/mw690/e067b31fgy1fl8e7qeacmj208c0i2q4z.jpg)
 
 # 一，使用步骤
 1，导入XMPlayer文件夹
@@ -26,34 +27,101 @@ playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
 ```
 @interface XMPlayerManager : UIView
 
-/** 当前图片 */
 
+/**
+ * 当前图片
+ *
+**/
 @property (nonatomic,strong) UIImage *currentImage;
 
-/** 视频地址 */
+/**
+ * 视频URL地址
+ *
+ * 支持网络视频，本地相册视频
+ **/
+@property (nonatomic,strong) NSURL *videoURL;
 
-@property (nonatomic, copy) NSString *videourl;
-
-/** 当前容器的View */
-
+/**
+ * 当前容器的View
+ *
+ **/
 @property (nonatomic, weak) UIView *sourceImagesContainerView;
 
-/*** 显示*/
-
- - (void)show;
+/**
+ * 显示
+ *
+ */
+- (void)show;
 
 @end
 ```
 
-# 三，注意事项
+# 三，宏定义修改
+```
+/************************ main ******************************/
+
+/**
+ *  图片动画时长
+ */
+#define XMImageAnimationDuration 0.35f
+
+/**
+ *  图字体
+ */
+#define XM18Font [UIFont systemFontOfSize:18]
+
+
+/************************ 菊花 ******************************/
+
+/**
+ *  旋转菊花的颜色
+ */
+#define XMRefreshColor [UIColor redColor].CGColor
+
+
+/************************ 进度条 ******************************/
+
+/**
+ *  进度背景颜色
+ */
+#define XMProgressBGColor XMRGBAColor(0,0,255,0.7)
+
+/**
+ *  进度背景颜色
+ */
+#define XMProgressInsideBGColor XMRGBAColor(0,255,0,0.7)
+
+/**
+ *  波浪进度颜色1
+ */
+#define XMWavesColor1 XMRGBAColor(216,59,49,0.7)
+
+/**
+ *  波浪进度颜色2
+ */
+#define XMWavesColor2 XMRGBAColor(255,0,0,0.7)
+```
+
+# 四，注意事项
 
 1，框架最适合小于30s小视频循环播放，由于AVPlayer缓存不足就会自动暂停，所以缓存充足了需要手动播放，才能继续播放，所以视频过大可能会出现中断问题
 
-2，整个方法最好在一个单独的view中实现，demo中在XMImgView实现，以免视频播放完后返回时的图片动画不连贯
+2，整个方法在demo中在XMPlayerTableViewCell实现
 
-3，暂时没有找到竖直方向的视频，如果谁有，可以发到我的简书里，或者写在issue中，谢谢，简书地址在下面
+3，长按视频下载
 
-# 四，更多
+4，宏定义在XMPlayerConfig中
+
+5，暂时没有找到竖直方向的视频，如果谁有，可以发到我的简书里，或者写在issue中，谢谢，简书地址在下面
+
+
+# 五，版本记录
+
+- 2017-11-01　　初版
+- 2017-11-06　　保存添加视频下载到相册
+
+
+# 六，更多
 
 1，如果觉得可以，请给个星星✨✨✨✨✨，谢谢🙏
 
@@ -61,6 +129,6 @@ playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
 
 2，我的简书http://www.jianshu.com/p/6e82fd2fcb01
  
-3，保存视频以及支持横竖屏等其他新功能正在添加中。。。。
+3，支持横竖屏等其他新功能正在添加中。。。。
  
  
