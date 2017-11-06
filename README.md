@@ -13,13 +13,13 @@
 3，使用方法：
 ```
 XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
-    
-playerManager.sourceImagesContainerView = self; ／／ 当前的view
-    
-playerManager.currentImage = sender.currentImage;  ／／ 当前的图片
-    
-playerManager.videourl = self.playerModel.videourl;    ／／ 视频地址
-    
+
+playerManager.sourceImagesContainerView = (UIView *)sender; // 当前的View
+
+playerManager.currentImage = sender.currentImage;  // 当前的图片
+
+playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当前的视频URL
+
 [playerManager show];
 ```
 
