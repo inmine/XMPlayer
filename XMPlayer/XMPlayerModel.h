@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MJExtension.h"
 
 @interface XMPlayerModel : NSObject
 
@@ -23,6 +22,9 @@
 
 /** 视频地址 */
 @property (nonatomic, copy) NSString *videourl;
+
+/** 字典转模型 */
++ (instancetype)statusWithDict:(NSDictionary *)dict;
 
 /** cell高度 */
 - (CGFloat)cellHeight;

@@ -15,4 +15,11 @@
     return _img_h + 20;
 }
 
++ (instancetype)statusWithDict:(NSDictionary *)dict
+{
+    XMPlayerModel *status = [[self alloc] init];
+    [status setValuesForKeysWithDictionary:dict];
+    return status;
+}
+
 @end
