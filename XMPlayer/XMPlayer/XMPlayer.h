@@ -2,7 +2,7 @@
 //  XMPlayer.h
 //  XMPlayer
 //
-//  Created by min on 2017/10/30.
+//  Created by min on 2017/11/7.
 //  Copyright © 2017年 min. All rights reserved.
 //
 
@@ -12,5 +12,3 @@
 #import "XMPlayerManager.h"
 #import "UIView+Extension.h"
 #import "XMRefreshView.h"
-
-

@@ -144,6 +144,7 @@
 		396432FF1FB02EDC00C8CC2A /* XMProgress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMProgress.m; sourceTree = "<group>"; };
 		396433011FB02EF700C8CC2A /* XMWaves.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMWaves.h; sourceTree = "<group>"; };
 		396433021FB02EF700C8CC2A /* XMWaves.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMWaves.m; sourceTree = "<group>"; };
+		3964D1C31FB17DE400E86AFE /* XMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPlayer.h; sourceTree = "<group>"; };
 		396EABCE1FA85679001A39E6 /* XMPlayerTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPlayerTableViewCell.h; sourceTree = "<group>"; };
 		396EABCF1FA85679001A39E6 /* XMPlayerTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPlayerTableViewCell.m; sourceTree = "<group>"; };
 		396EABD11FA8572A001A39E6 /* XMPlayerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPlayerModel.h; sourceTree = "<group>"; };
@@ -154,7 +155,6 @@
 		396EAC071FA867B1001A39E6 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		396EAC091FA867D1001A39E6 /* XMRefreshView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMRefreshView.h; sourceTree = "<group>"; };
 		396EAC0A1FA867D1001A39E6 /* XMRefreshView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMRefreshView.m; sourceTree = "<group>"; };
-		396EAC0C1FA868AD001A39E6 /* XMPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPlayer.h; sourceTree = "<group>"; };
 		396EAC0D1FA868AD001A39E6 /* XMPlayerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPlayerConfig.h; sourceTree = "<group>"; };
 		396EAC101FA86EF8001A39E6 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -334,7 +334,6 @@
 		396EABF91FA8678C001A39E6 /* XMPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				396EAC0C1FA868AD001A39E6 /* XMPlayer.h */,
 				396EAC0D1FA868AD001A39E6 /* XMPlayerConfig.h */,
 				396EAC061FA867B1001A39E6 /* UIView+Extension.h */,
 				396EAC071FA867B1001A39E6 /* UIView+Extension.m */,
@@ -346,6 +345,7 @@
 				396432FF1FB02EDC00C8CC2A /* XMProgress.m */,
 				396433011FB02EF700C8CC2A /* XMWaves.h */,
 				396433021FB02EF700C8CC2A /* XMWaves.m */,
+				3964D1C31FB17DE400E86AFE /* XMPlayer.h */,
 			);
 			path = XMPlayer;
 			sourceTree = "<group>";

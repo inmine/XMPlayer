@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "XMPlayer.h"
 #import "XMPlayerTableViewCell.h"
 #import "XMPlayerModel.h"
 #import "MJExtension.h"
@@ -68,7 +67,7 @@
     UITableView *tableView = [[UITableView alloc] init];
     // 去掉UITableView中cell不够多余部分的分割线
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    tableView.backgroundColor = XMRGBColor(230, 230, 230);
+    tableView.backgroundColor = [UIColor lightGrayColor];
     // 隐藏cell分割线
     tableView.separatorStyle = NO;
     tableView.delegate = self;
