@@ -124,7 +124,6 @@
 		396433021FB02EF700C8CC2A /* XMWaves.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMWaves.m; sourceTree = "<group>"; };
 		3964D1C31FB17DE400E86AFE /* XMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPlayer.h; sourceTree = "<group>"; };
 		3964D1C71FB17F1F00E86AFE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3964D1C81FB17F1F00E86AFE /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		3964D1C91FB17F1F00E86AFE /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
 		3964D1CA1FB17F1F00E86AFE /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
 		3964D1CB1FB17F1F00E86AFE /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
@@ -145,6 +144,7 @@
 		3964D1DA1FB17F1F00E86AFE /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
 		3964D1DB1FB17F1F00E86AFE /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		3964D1DC1FB17F1F00E86AFE /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		3964D1E81FB17F7A00E86AFE /* MJExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		396EABCE1FA85679001A39E6 /* XMPlayerTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPlayerTableViewCell.h; sourceTree = "<group>"; };
 		396EABCF1FA85679001A39E6 /* XMPlayerTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPlayerTableViewCell.m; sourceTree = "<group>"; };
 		396EABD11FA8572A001A39E6 /* XMPlayerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPlayerModel.h; sourceTree = "<group>"; };
@@ -306,7 +306,6 @@
 			isa = PBXGroup;
 			children = (
 				3964D1C71FB17F1F00E86AFE /* Info.plist */,
-				3964D1C81FB17F1F00E86AFE /* MJExtension.h */,
 				3964D1C91FB17F1F00E86AFE /* MJExtensionConst.h */,
 				3964D1CA1FB17F1F00E86AFE /* MJExtensionConst.m */,
 				3964D1CB1FB17F1F00E86AFE /* MJFoundation.h */,
@@ -327,6 +326,7 @@
 				3964D1DA1FB17F1F00E86AFE /* NSObject+MJProperty.m */,
 				3964D1DB1FB17F1F00E86AFE /* NSString+MJExtension.h */,
 				3964D1DC1FB17F1F00E86AFE /* NSString+MJExtension.m */,
+				3964D1E81FB17F7A00E86AFE /* MJExtension.h */,
 			);
 			path = MJExtension;
 			sourceTree = "<group>";
