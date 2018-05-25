@@ -23,30 +23,18 @@
     
     if (_dataArray == nil) {
         
-        NSArray *dictArray = @[@{
-                               @"img_w":@(200),
-                               @"img_h":@(111.25),
-                               @"imgurl":@"http://www.xingyi888.com/xingyi/upload/201709/ca5b813bb30310f10c811a325856cc1f50714b69.jpg",
-                               @"videourl":@"http://www.xingyi888.com/xingyi/upload/video/201709/4249dc6bcd0c3ebdeb3f800c1b436115dd899d8b.mp4"
-                               },
+        NSArray *dictArray = @[
                            @{
                                @"img_w":@(200),
                                @"img_h":@(122.54),
                                @"imgurl":@"https://wx3.sinaimg.cn/mw690/e067b31fgy1fl2n55uh8dj20zg0jy1kx.jpg",
                                @"videourl":@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"
-                               },
-                           @{
-                               @"img_w":@(200),
-                               @"img_h":@(112),
-                               @"imgurl":@"http://120.25.226.186:32812/resources/images/minion_08.png",
-                               @"videourl":@"http://120.25.226.186:32812/resources/videos/minion_02.mp4"
-                               },
+                               }
                            ];
         
         // 字典数组 -> 模型数组
         NSMutableArray *statusArray = [NSMutableArray array];
         for (NSDictionary *dict in dictArray) {
-            
             XMPlayerModel *status = [XMPlayerModel statusWithDict:dict];
             [statusArray addObject:status];
         }
@@ -66,33 +54,6 @@
     [self addUI];
 }
 
-#pragma mark - 添加数据
-- (void)addData{
-    
-    self.dataArray = @[@{
-                           @"img_w":@(200),
-                           @"img_h":@(111.25),
-                           @"imgurl":@"http://www.xingyi888.com/xingyi/upload/201709/ca5b813bb30310f10c811a325856cc1f50714b69.jpg",
-                           @"videourl":@"http://www.xingyi888.com/xingyi/upload/video/201709/4249dc6bcd0c3ebdeb3f800c1b436115dd899d8b.mp4"
-                         },
-                       @{
-                           @"img_w":@(200),
-                           @"img_h":@(122.54),
-                           @"imgurl":@"https://wx3.sinaimg.cn/mw690/e067b31fgy1fl2n55uh8dj20zg0jy1kx.jpg",
-                           @"videourl":@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"
-                           },
-                       @{
-                           @"img_w":@(200),
-                           @"img_h":@(112),
-                           @"imgurl":@"http://120.25.226.186:32812/resources/images/minion_08.png",
-                           @"videourl":@"http://120.25.226.186:32812/resources/videos/minion_02.mp4"
-                           },
-                       ];
-    
-//    self.dataArray = [XMPlayerModel mj_objectArrayWithKeyValuesArray:array];
-    
-}
-
 #pragma mark - 添加UI
 - (void)addUI{
     
@@ -108,7 +69,6 @@
     tableView.frame = self.view.bounds;
     [self.view addSubview:tableView];
     [tableView reloadData];
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -45,6 +45,7 @@
  **/
 @property (nonatomic, assign) BOOL isAllowCyclePlay;
 
+
 /**
  * 显示
  *

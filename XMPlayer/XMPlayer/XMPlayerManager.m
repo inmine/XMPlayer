@@ -212,8 +212,19 @@
     //隐藏状态栏
     window.windowLevel = UIWindowLevelStatusBar + 10.0f;
     
+    // 基本配置
+    [self addConfig];
+    
     // 添加视频
     [self addVideo];
+}
+
+#pragma mark - 基本配置
+- (void)addConfig{
+    
+    if (!self.animationDuration) {
+        self.animationDuration = 0.35;
+    }
 }
 
 #pragma mark - 重新布局
@@ -254,7 +265,7 @@
         targetTemp = CGRectMake(0, 0, WIDTH, placeHolderH);
     }
     
-    [UIView animateWithDuration:XMImageAnimationDuration animations:^{
+    [UIView animateWithDuration:self.animationDuration animations:^{
         //将点击的临时imageview动画放大到和目标imageview一样大
         tempView.frame = targetTemp;
     } completion:^(BOOL finished) {
@@ -335,7 +346,7 @@
     // 移除播放器
     [self removePlayer];
 
-    [UIView animateWithDuration:XMImageAnimationDuration animations:^{
+    [UIView animateWithDuration:self.animationDuration animations:^{
 
         self.tempView.frame = targetTemp;
         self.backgroundColor = [UIColor clearColor];
