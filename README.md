@@ -1,7 +1,7 @@
 # XMPlayer
 模仿微信短视频播放
 
-![Platform](https://wx2.sinaimg.cn/mw690/e067b31fgy1fu04bmrm96g208w0ik7wr.gif)
+<img src="https://wx2.sinaimg.cn/mw690/e067b31fgy1fu04bmrm96g208w0ik7wr.gif" width="270" height="480">
 
 # 一，使用步骤
 1，导入XMPlayer文件夹
