@@ -1,6 +1,7 @@
 # XMPlayer
 模仿微信短视频播放
 
+![Platform](https://wx1.sinaimg.cn/mw690/e067b31fgy1fu0548jv2mg208w0ikb2b.gif)
 <img src="https://wx1.sinaimg.cn/mw690/e067b31fgy1fu0548jv2mg208w0ikb2b.gif" width="270" height="480">
 
 # 一，使用步骤
