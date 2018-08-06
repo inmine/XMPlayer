@@ -36,6 +36,17 @@
     // 3.显视窗口
     [self.window makeKeyAndVisible];
     
+    // 兼容ios11
+    if(@available(iOS 11.0, *)){
+        // UIScrollView兼容ios11
+        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+        // UITableView兼容ios11
+        [UITableView appearance].estimatedRowHeight = 0;
+        [UITableView appearance].estimatedSectionFooterHeight = 0;
+        [UITableView appearance].estimatedSectionHeaderHeight = 0;
+        [UITableView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+    
     return YES;
 }
 

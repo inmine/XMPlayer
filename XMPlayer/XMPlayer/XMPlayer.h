@@ -9,6 +9,6 @@
 // 项目github地址: https://github.com/inmine/XMPlayer.git
 
 #import "XMPlayerConfig.h"
-#import "XMPlayerManager.h"
+#import "XMPlayerView.h"
 #import "UIView+Extension.h"
 #import "XMRefreshView.h"

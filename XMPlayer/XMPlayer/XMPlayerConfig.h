@@ -25,7 +25,8 @@
 // 颜色
 #define XMRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define XMRGBAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
-
+/** 是否是iphoneX设备 */
+#define IS_PhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
 
 /************************ main ******************************/
 
@@ -39,36 +40,17 @@
  */
 #define XM18Font [UIFont systemFontOfSize:18]
 
+/************************ 文字提示 ******************************/
+#define XMNetFialText @"网络连接失败"
+#define XMVideoUrlText @"请输入视频地址"
+#define XMVideoPlayFialText @"播放失败"
+#define XMVideoDownFinish  @"下载完成"
 
 /************************ 菊花 ******************************/
 
 /**
  *  旋转菊花的颜色
  */
-#define XMRefreshColor [UIColor redColor].CGColor
+#define XMRefreshColor [UIColor whiteColor].CGColor
 
-
-
-
-/************************ 进度条 ******************************/
-
-/**
- *  进度背景颜色
- */
-#define XMProgressBGColor XMRGBAColor(0,0,255,0.7)
-
-/**
- *  进度背景颜色
- */
-#define XMProgressInsideBGColor XMRGBAColor(0,255,0,0.7)
-
-/**
- *  波浪进度颜色1
- */
-#define XMWavesColor1 XMRGBAColor(216,59,49,0.7)
-
-/**
- *  波浪进度颜色2
- */
-#define XMWavesColor2 XMRGBAColor(255,0,0,0.7)
 

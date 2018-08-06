@@ -12,24 +12,18 @@
 
 3，使用方法：
 ```
-XMPlayerManager *playerManager = [[XMPlayerManager alloc] init];
-
-playerManager.sourceImagesContainerView = (UIView *)sender; // 当前的View
-
-playerManager.currentImage = sender.currentImage;  // 当前的图片
-
- // playerManager.isAllowDownload = NO; // 不允许下载视频
- 
-//    playerManager.isAllowCyclePlay = NO;  // 不循环播放
-
-playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当前的视频URL
-
-[playerManager show];
+XMPlayerView *playerView = [[XMPlayerView alloc] init];
+playerView.sourceImagesContainerView = (UIView *)sender;  // 当前的View
+playerView.currentImage = sender.currentImage;  // 当前的图片
+//    playerView.isAllowDownload = NO; // 不允许下载视频
+//    playerView.isAllowCyclePlay = NO;  // 不循环播放
+playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"];  // 当前的视频URL
+[playerView show];
 ```
 
 # 二，主要属性
 ```
-@interface XMPlayerManager : UIView
+@interface XMPlayerView : UIView
 
 
 /**
@@ -88,36 +82,6 @@ playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当
  */
 #define XM18Font [UIFont systemFontOfSize:18]
 
-
-/************************ 菊花 ******************************/
-
-/**
- *  旋转菊花的颜色
- */
-#define XMRefreshColor [UIColor redColor].CGColor
-
-
-/************************ 进度条 ******************************/
-
-/**
- *  进度背景颜色
- */
-#define XMProgressBGColor XMRGBAColor(0,0,255,0.7)
-
-/**
- *  进度背景颜色
- */
-#define XMProgressInsideBGColor XMRGBAColor(0,255,0,0.7)
-
-/**
- *  波浪进度颜色1
- */
-#define XMWavesColor1 XMRGBAColor(216,59,49,0.7)
-
-/**
- *  波浪进度颜色2
- */
-#define XMWavesColor2 XMRGBAColor(255,0,0,0.7)
 ```
 
 # 四，注意事项
@@ -137,6 +101,7 @@ playerManager.videoURL = [NSURL URLWithString:self.playerModel.videourl]; // 当
 
 - 2017-11-01　　初版
 - 2017-11-06　　保存添加视频下载到相册
+- 2018-08-06　　优化代码，优化内存
 
 
 # 六，更多

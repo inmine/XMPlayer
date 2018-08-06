@@ -7,42 +7,14 @@
 //
 
 #import "ViewController.h"
-#import "XMPlayerTableViewCell.h"
-#import "XMPlayerModel.h"
+#import "XMPlayer.h"
 
-@interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
-
-/** 数据数据 */
-@property (nonatomic,strong) NSArray *dataArray;
+@interface ViewController ()
 
 @end
 
 @implementation ViewController
 
-- (NSArray *)dataArray{
-    
-    if (_dataArray == nil) {
-        
-        NSArray *dictArray = @[
-                           @{
-                               @"img_w":@(200),
-                               @"img_h":@(122.54),
-                               @"imgurl":@"https://wx3.sinaimg.cn/mw690/e067b31fgy1fl2n55uh8dj20zg0jy1kx.jpg",
-                               @"videourl":@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"
-                               }
-                           ];
-        
-        // 字典数组 -> 模型数组
-        NSMutableArray *statusArray = [NSMutableArray array];
-        for (NSDictionary *dict in dictArray) {
-            XMPlayerModel *status = [XMPlayerModel statusWithDict:dict];
-            [statusArray addObject:status];
-        }
-        
-        _dataArray = statusArray;
-    }
-    return _dataArray;
-}
 
 - (void)viewDidLoad {
     
@@ -50,46 +22,38 @@
     
     self.navigationItem.title = @"XM短视频播放";
     
-    // 添加UI
-    [self addUI];
+    
+    UIButton *playerBtn = [[UIButton alloc] init];
+    playerBtn.backgroundColor = [UIColor redColor];
+    playerBtn.frame = CGRectMake((self.view.bounds.size.width-200)/2.0, 100, 200, 122.54);
+    [self.view addSubview:playerBtn];
+
+    NSURL *url = [NSURL URLWithString:@"http://wx3.sinaimg.cn/mw690/e067b31fgy1fl2n55uh8dj20zg0jy1kx.jpg"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    // 这里最好用SDWebImage框架加载图片
+    [playerBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+    [playerBtn addTarget:self action:@selector(btnPlayClick:) forControlEvents:UIControlEventTouchUpInside];
+
+    UIImageView *playImgView = [[UIImageView alloc] init];
+    playImgView.image = [UIImage imageNamed:@"play.png"];
+    playImgView.width = playImgView.height = 44;
+    playImgView.x = (playerBtn.width - playImgView.width)/2.0;
+    playImgView.y = (playerBtn.height - playImgView.height)/2.0;
+    [playerBtn addSubview:playImgView];
 }
 
-#pragma mark - 添加UI
-- (void)addUI{
+// 点击播放
+- (void)btnPlayClick:(UIButton *)sender{
     
-    // tableView
-    UITableView *tableView = [[UITableView alloc] init];
-    // 去掉UITableView中cell不够多余部分的分割线
-    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    tableView.backgroundColor = [UIColor grayColor];
-    // 隐藏cell分割线
-    tableView.separatorStyle = NO;
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.frame = self.view.bounds;
-    [self.view addSubview:tableView];
-    [tableView reloadData];
+    //    NSLog(@"点击播放");
+    XMPlayerView *playerView = [[XMPlayerView alloc] init];
+    playerView.sourceImagesContainerView = (UIView *)sender;  // 当前的View
+    playerView.currentImage = sender.currentImage;  // 当前的图片
+    //    playerView.isAllowDownload = NO; // 不允许下载视频
+    //    playerView.isAllowCyclePlay = NO;  // 不循环播放
+    playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"];  // 当前的视频URL
+    [playerView show];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return self.dataArray.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    XMPlayerModel *model = self.dataArray[indexPath.row];
-    return [model cellHeight];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    XMPlayerTableViewCell *cell = [XMPlayerTableViewCell cellWithTableView:tableView cellForRowAtIndexPath:indexPath];
-    XMPlayerModel *model = self.dataArray[indexPath.row];
-    cell.playerModel = model;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
-}
 
 @end
