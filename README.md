@@ -3,7 +3,7 @@
 
 ![Platform](https://wx4.sinaimg.cn/mw690/e067b31fgy1fl2nfwkfgwj208c0i2acj.jpg)
 ![Platform](https://wx3.sinaimg.cn/mw690/e067b31fgy1fl8e7qo5tcj208c0i2jt3.jpg)
-![Platform](https://wx3.sinaimg.cn/mw690/e067b31fgy1fl8e7qeacmj208c0i2q4z.jpg)
+![Platform](https://wx1.sinaimg.cn/mw690/e067b31fgy1fu03hvi8u5j20af0mk425.jpg)
 
 # 一，使用步骤
 1，导入XMPlayer文件夹
@@ -78,23 +78,26 @@ playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/
 #define XMImageAnimationDuration 0.35f
 
 /**
- *  图字体
+ *  字体
  */
 #define XM18Font [UIFont systemFontOfSize:18]
+
+/************************ 菊花 ******************************/
+
+/**
+ *  旋转菊花的颜色
+ */
+#define XMRefreshColor [UIColor whiteColor].CGColor
 
 ```
 
 # 四，注意事项
 
-1，框架最适合小于30s小视频循环播放，由于AVPlayer缓存不足就会自动暂停，所以缓存充足了需要手动播放，才能继续播放，所以视频过大可能会出现中断问题
+1，框架最适合小于30s小视频循环播放
 
-2，整个方法在demo中在XMPlayerTableViewCell实现
+2，宏定义在XMPlayerConfig中，可修改
 
-3，长按视频下载，视频下载基于AFNetworking框架，如果不需要下载功能，或者未使用AFNetworking框架，可以删除相应的代码
-
-4，宏定义在XMPlayerConfig中，可修改
-
-5，暂时没有找到竖直方向的视频，如果谁有，可以发到我的简书里，或者写在issue中，谢谢，简书地址在下面
+3，暂时没有找到竖直方向的视频，如果谁有，可以发到我的简书里，或者写在issue中，谢谢，简书地址在下面
 
 
 # 五，版本记录
