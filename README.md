@@ -115,6 +115,4 @@ playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/
 
 2，我的简书http://www.jianshu.com/p/6e82fd2fcb01
  
-3，支持横竖屏等其他新功能正在添加中。。。。
- 
  
