@@ -12,7 +12,7 @@
 /**************** 宏定义 ***********************/
 // 输出
 #if DEBUG  // 测试环境
-#define XMLog(...)  NSLog(__VA_ARGS__)
+#define XMLog(...)  //NSLog(__VA_ARGS__)
 #else
 #define XMLog(...)
 #endif
