@@ -111,9 +111,11 @@ playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/
 - 2018-08-06　　优化代码，优化内存
 - 2018-08-08　　解决部分文件丢失问题
 
+# 六，计划
 
+✨ 添加手势拖动视频交互（仿微信朋友圈视频播放事件处理）
 
-# 六，更多
+# 七，更多
 
 1，如果觉得可以，请给个星星✨✨✨✨✨，谢谢🙏
 
