@@ -58,13 +58,6 @@
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         _backgroundSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     }
-    
-//    static NSURLSession *backgroundSess = nil;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-//        backgroundSess = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-//    });
     return _backgroundSession;
 }
 
@@ -84,13 +77,13 @@
         mengbanView.backgroundColor = [UIColor blackColor];
         mengbanView.alpha = 0;
         [mengbanView addTarget:self action:@selector(mengbanViewClick) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:mengbanView];
+        [self.BGView addSubview:mengbanView];
         _mengbanView = mengbanView;
         
         // 保存View
         UIView *saveView = [[UIView alloc] init];
         saveView.backgroundColor = XMRGBColor(160, 160, 160);
-        [self addSubview:saveView];
+        [self.BGView addSubview:saveView];
         _saveView = saveView;
         
         if (IS_PhoneX) { // iphone X
