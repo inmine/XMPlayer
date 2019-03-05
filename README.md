@@ -10,6 +10,8 @@
 
 3，使用方法：
 ```
+domo1:
+
 XMPlayerView *playerView = [[XMPlayerView alloc] init];
 
 playerView.sourceImagesContainerView = (UIView *)sender;  // 当前的View
@@ -23,6 +25,29 @@ playerView.currentImage = sender.currentImage;  // 当前的图片
 playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"];  // 当前的视频URL
 
 [playerView show];
+
+domo2:
+
+CGFloat palyerW = [UIScreen mainScreen].bounds.size.width;
+    XMPlayerView *playerView = [[XMPlayerView alloc] init];
+    playerView.frame = CGRectMake(0, 0, palyerW, palyerW / 7 * 4);
+    playerView.playerViewType = XMPlayerViewAiqiyiVideoType;
+    playerView.videoURL = [NSURL URLWithString:@"https://www.xingyi888.com/xingyi/upload/video/201806/cbc13a1ed0309138ce559dfad8de42b8ca26234c.mp4"];
+    [self.view addSubview:playerView];
+    [playerView show];
+    
+demo3:
+
+   CGFloat palyerW = [UIScreen mainScreen].bounds.size.width;
+    XMPlayerView *playerView = [[XMPlayerView alloc] init];
+    playerView.frame = CGRectMake(0, 0, palyerW, palyerW / 7 * 4);
+    playerView.playerViewType = XMPlayerViewTwoSynVideoType;
+    playerView.videoURL = [NSURL URLWithString:@"https://www.xingyi888.com/xingyi/upload/video/201806/cbc13a1ed0309138ce559dfad8de42b8ca26234c.mp4"];
+//    playerView.subVideoURL = [NSURL URLWithString:@"https://www.xingyi888.com/xingyi/upload/video/201806/cbc13a1ed0309138ce559dfad8de42b8ca26234c.mp4"];
+    [self.view addSubview:playerView];
+    [playerView show];
+
+
 ```
 
 # 二，主要属性
@@ -110,12 +135,10 @@ playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/
 - 2017-11-06　　保存添加视频下载到相册
 - 2018-08-06　　优化代码，优化内存
 - 2018-08-08　　解决部分文件丢失问题
+- 2019-03-05    添加dome2：单视频播放器， demo3：两个视频同步播放播放器（界面可切换）
 
-# 六，计划
 
-✨ 添加手势拖动视频交互（仿微信朋友圈视频播放事件处理）
-
-# 七，更多
+# 六，更多
 
 1，如果觉得可以，请给个星星✨✨✨✨✨，谢谢🙏
 
