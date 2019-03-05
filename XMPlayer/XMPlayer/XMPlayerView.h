@@ -10,6 +10,14 @@
 
 #import <UIKit/UIKit.h>
 
+
+/** 商品类型 **/
+typedef enum {
+    XMPlayerViewWechatShortVideoType = 0,  // 微信短视频
+    XMPlayerViewAiqiyiVideoType = 1,  // 爱奇艺视频
+    XMPlayerViewTwoSynVideoType = 2,  // 两个同步视频
+} XMPlayerViewType;
+
 @interface XMPlayerView : UIView
 
 /**
@@ -24,6 +32,7 @@
  * 支持网络视频，本地相册视频
  **/
 @property (nonatomic,strong) NSURL *videoURL;
+@property (nonatomic,strong) NSURL *subVideoURL;
 
 /**
  * 当前容器的View
@@ -50,6 +59,17 @@
  *
  */
 - (void)show;
+
+
+@property (nonatomic, assign) BOOL isFullScreen; // 是否是全屏 默认：NO
+
+
+@property (nonatomic, assign) XMPlayerViewType playerViewType;
+
+/**
+ 设置地址
+ */
+- (void)settingPlayerItemWithUrl:(NSURL *)playerUrl;
 
 
 @end

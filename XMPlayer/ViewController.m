@@ -7,53 +7,116 @@
 //
 
 #import "ViewController.h"
+#import "XMDemo1ViewController.h"
+#import "XMDemo2ViewController.h"
+#import "XMDemo3ViewController.h"
 #import "XMPlayer.h"
+#import "AppDelegate.h"
 
-@interface ViewController ()
+@interface listItem : NSObject
+
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subTitle;
+@property (nonatomic, assign) Class viewControllClass;
+- (instancetype)initWithTitle:(NSString *)title subTitle:(NSString *)subTitle viewControllClass:(Class)class;
+
+@end
+
+@implementation listItem
+
+- (instancetype)initWithTitle:(NSString *)title subTitle:(NSString *)subTitle viewControllClass:(Class)class
+{
+    self = [super init];
+    if (self) {
+        self.title = title;
+        self.subTitle = subTitle;
+        self.viewControllClass = class;
+    }
+    return self;
+}
+
+@end
+
+static NSString *const xm_cellIdentifier = @"cell_identifier";
+
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, copy) NSArray *listArray;
 
 @end
 
 @implementation ViewController
 
+- (NSArray *)listArray{
+    if (!_listArray) {
+        _listArray = @[[[listItem alloc] initWithTitle:@"Demo1" subTitle:@"短视频播放（模仿微信朋友圈）" viewControllClass:[XMDemo1ViewController class]],
+                       [[listItem alloc] initWithTitle:@"Demo2" subTitle:@"单视频播放器（模仿爱奇艺）" viewControllClass:[XMDemo2ViewController class]],
+                       [[listItem alloc] initWithTitle:@"Demo3" subTitle:@"两个视频同步播放播放器（界面可切换）" viewControllClass:[XMDemo3ViewController class]],
+                       ];
+    }
+    return _listArray;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.hidden = NO;
+    // 竖屏
+    AppDelegateOrientationMaskPortrait
+}
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
-    self.navigationItem.title = @"XM短视频播放";
+    self.navigationItem.title = @"XMPlayer";
     
-    
-    UIButton *playerBtn = [[UIButton alloc] init];
-    playerBtn.backgroundColor = [UIColor redColor];
-    playerBtn.frame = CGRectMake((self.view.bounds.size.width-200)/2.0, 100, 200, 122.54);
-    [self.view addSubview:playerBtn];
-
-    NSURL *url = [NSURL URLWithString:@"http://wx3.sinaimg.cn/mw690/e067b31fgy1fl2n55uh8dj20zg0jy1kx.jpg"];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    // 这里最好用SDWebImage框架加载图片
-    [playerBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
-    [playerBtn addTarget:self action:@selector(btnPlayClick:) forControlEvents:UIControlEventTouchUpInside];
-
-    UIImageView *playImgView = [[UIImageView alloc] init];
-    playImgView.image = [UIImage imageNamed:@"play.png"];
-    playImgView.width = playImgView.height = 44;
-    playImgView.x = (playerBtn.width - playImgView.width)/2.0;
-    playImgView.y = (playerBtn.height - playImgView.height)/2.0;
-    [playerBtn addSubview:playImgView];
+    UITableView *tableView = [[UITableView alloc] init];
+    tableView.frame = self.view.frame;
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.contentInset = UIEdgeInsetsMake(NavFrame.size.height, 0, 0, 0);
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
 }
 
-// 点击播放
-- (void)btnPlayClick:(UIButton *)sender{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    //    NSLog(@"点击播放");
-    XMPlayerView *playerView = [[XMPlayerView alloc] init];
-    playerView.sourceImagesContainerView = (UIView *)sender;  // 当前的View
-    playerView.currentImage = sender.currentImage;  // 当前的图片
-    //    playerView.isAllowDownload = NO; // 不允许下载视频
-    //    playerView.isAllowCyclePlay = NO;  // 不循环播放
-    playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"];  // 当前的视频URL
-    [playerView show];
+    return self.listArray.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 100;
+}
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:xm_cellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:xm_cellIdentifier];
+        cell.detailTextLabel.numberOfLines = 0;
+        cell.detailTextLabel.textColor = [UIColor grayColor];
+    }
+    listItem *item = self.listArray[indexPath.row];
+    cell.textLabel.text = item.title;
+    cell.detailTextLabel.text = item.subTitle;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    listItem *item = self.listArray[indexPath.row];
+    UIViewController *viewController = [[item.viewControllClass alloc] init];
+    viewController.title = item.title;
+    viewController.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+    
 @end
