@@ -68,6 +68,7 @@
  是否是手动暂停
  */
 @property (nonatomic, assign) BOOL isManualStop;
+@property (nonatomic, assign) BOOL isInitPlay;  // 是否是初始化播放
 
 
 @end
@@ -87,41 +88,6 @@
         _backgroundSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     }
     return _backgroundSession;
-}
-
-- (AVPlayer *)avPlayer{
-    
-    if (_avPlayer == nil) {
-        _avPlayer = [[AVPlayer alloc] init];
-        // 设置默认音量
-        //        _avPlayer.volume = 0.5;
-        // 获取系统声音
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
-        CGFloat currentVolume = audioSession.outputVolume;
-        _avPlayer.volume = currentVolume;
-    }
-    return _avPlayer;
-}
-
-- (AVPlayer *)avPlayer2{
-    
-    if (_avPlayer2 == nil) {
-        _avPlayer2 = [[AVPlayer alloc] init];
-        // 设置默认音量
-        //        _avPlayer.volume = 0.5;
-        // 获取系统声音
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
-        CGFloat currentVolume = audioSession.outputVolume;
-        _avPlayer2.volume = currentVolume;
-    }
-    return _avPlayer2;
-}
-
-+ (Class)layerClass
-{
-    return [AVPlayerLayer class];
 }
 
 /**
@@ -225,6 +191,7 @@
         value = 1;
     }else if (value <= 0){
         value = 0;
+        self.isInitPlay = YES;
     }
     
     if (isDraging) {
@@ -249,6 +216,9 @@
     CMTime duration = self.playerItem.duration;
     // 播放结束重复播放
     [self.avPlayer seekToTime:CMTimeMake(CMTimeGetSeconds(duration)*value, 1)];
+    if (self.playerViewType == XMPlayerViewTwoSynVideoType) {
+        [self.avPlayer2 seekToTime:CMTimeMake(CMTimeGetSeconds(duration)*value, 1)];
+    }
     self.isDraging = NO;;
 }
 
@@ -408,6 +378,8 @@
     [self addSubview:BGView];
     self.BGView = BGView;
     
+    self.isInitPlay = YES;
+    
     //1 创建AVPlayerItem
     //    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:self.videoURL];
     self.playerItem = [AVPlayerItem playerItemWithURL:self.videoURL];
@@ -439,7 +411,6 @@
     //4 最后把 AVPlayerLayer放到self.view.layer上(也就是需要放置的视图的layer层上)
     [self.BGView.layer addSublayer:self.playerLayer2];
     [self.BGView.layer insertSublayer:self.playerLayer2 above:self.playerLayer];
-    
     
     [self loadObserver:self.playerItem2];
     // 加载通知
@@ -571,9 +542,8 @@
             }else if (self.playerViewType == XMPlayerViewAiqiyiVideoType){
                 self.controlView.playButton.selected = NO;
                 [self play];
-            }else{
-                [self play];
             }
+            
         } else if (status == AVPlayerStatusFailed) {
             XMLog(@"AVPlayerStatusFailed");
             // 播放失败
@@ -600,54 +570,56 @@
         if (self.playerViewType == XMPlayerViewTwoSynVideoType) {
             
             if (playerItem == self.playerItem) {
-                //            XMLog(@"当前缓存时间视频1:%@",[NSString stringWithFormat:@"%.0f", totalBuffer]);
+                            XMLog(@"当前缓存时间视频1:%@",[NSString stringWithFormat:@"%.0f", totalBuffer]);
                 self.playBufferTime1 = [[NSString stringWithFormat:@"%.0f", totalBuffer] intValue];
             }else if (playerItem == self.playerItem2){
                 
-                //            XMLog(@"当前缓存时间视频2:%@",[NSString stringWithFormat:@"%.0f", totalBuffer]);
+                            XMLog(@"当前缓存时间视频2:%@",[NSString stringWithFormat:@"%.0f", totalBuffer]);
                 self.playBufferTime2 = [[NSString stringWithFormat:@"%.0f", totalBuffer] intValue];
             }
             
             self.minBufferTime = (self.playBufferTime1 <= self.playBufferTime2)?self.playBufferTime1:self.playBufferTime2;
             
-            //        XMLog(@"当前缓存时间视频最小值:%d",self.minBufferTime);
+            XMLog(@"当前缓存时间视频最小值:%d",self.minBufferTime);
             
-//            if (self.minBufferTime>=10) {
-//                static dispatch_once_t onceToken;
-//                dispatch_once(&onceToken, ^{
-//                    [self play];
-//                });
-//            }
+            if (self.playerViewType == XMPlayerViewTwoSynVideoType) {
+                
+                if (self.isInitPlay) {
+                    if (self.minBufferTime>=10) {
+                        [self play];
+                        self.isInitPlay = NO;
+                    }else{
+                        [self pause];
+                    }
+                }
+            }
         }
-        
     } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) { //监听播放器在缓冲数据的状态
         
         XMLog(@"缓冲不足暂停了");
-        
-//        if (self.playerViewType == XMPlayerViewWechatShortVideoType) {
-//
-//        }
         [self pause];
         [self startAnimation];
         
     } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
         
         XMLog(@"缓冲达到可播放程度了");
-        
 //        // 由于 AVPlayer 缓存不足就会自动暂停，所以缓存充足了需要手动播放，才能继续播放
-//        if (self.playerViewType == XMPlayerViewWechatShortVideoType) {
-//        }
-        
         if (!self.isManualStop) { // 不是手动暂停
-            
             if (self.playerItem.playbackLikelyToKeepUp) {  // 缓冲达到可播放程度
-                // 结束刷新
-                [self endAnimation];
-                // 播放
-                [self play];
+                
+                if (self.playerViewType == XMPlayerViewTwoSynVideoType) {
+                    if (!self.isInitPlay) {
+                        // 结束刷新
+                        [self endAnimation];
+                        // 播放
+                        [self play];
+                    }
+                }else{
+                    // 播放
+                    [self play];
+                }
             }
         }
-        
     } else if ([keyPath isEqualToString:@"playbackBufferFull"]) {
         
         XMLog(@"缓冲区满了");
@@ -1222,6 +1194,8 @@ didFinishDownloadingToURL:(NSURL *)location{
         [self.avPlayer2 play];
     }
     [self.avPlayer play];
+    // 结束刷新
+    [self endAnimation];
 }
 
 // 暂停
