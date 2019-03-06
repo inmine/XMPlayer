@@ -368,23 +368,6 @@
 // 加载初始界面
 - (void)loadAiqiyiVideoTypeUI{
     
-//    self.playerLayer = (AVPlayerLayer *)self.layer;
-//    self.playerLayer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6].CGColor;
-//    // 初始化playerLayer的player
-//    self.playerLayer.player = self.avPlayer;
-//
-//    self.playerItem = [[AVPlayerItem alloc] initWithURL:self.videoURL];
-//    /*
-//     replaceCurrentItemWithPlayerItem: 用于切换视频
-//     */
-//    // 设置当前playerItem
-//    [self.avPlayer replaceCurrentItemWithPlayerItem:self.playerItem];
-//
-//    [self loadObserver:self.playerItem];
-//
-//    // 加载通知
-//    [self loadNotification:self.playerItem];
-    
     // 设置背景View
     UIView *BGView = [[UIView alloc] init];
     BGView.backgroundColor = [UIColor blackColor];
@@ -443,14 +426,16 @@
     
     self.minVideoWideoRect = CGRectMake(0, 30, 100, 80);
     //1 创建AVPlayerItem
-    NSString *moviePath = [[NSBundle mainBundle] pathForResource:@"movie" ofType:@"mp4"];
-    self.playerItem2 = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:moviePath]];
+//    NSString *moviePath = [[NSBundle mainBundle] pathForResource:@"movie" ofType:@"mp4"];
+//    self.playerItem2 = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:moviePath]];
+    self.playerItem2 = [AVPlayerItem playerItemWithURL:self.subVideoURL];
     //2.把AVPlayerItem放在AVPlayer上
     self.avPlayer2 = [[AVPlayer alloc] initWithPlayerItem:self.playerItem2];
     //3 再把AVPlayer放到 AVPlayerLayer上
     self.playerLayer2 = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer2];
     self.playerLayer2.videoGravity = AVLayerVideoGravityResizeAspect;//视频填充模式
     self.playerLayer2.frame = self.minVideoWideoRect;
+    self.avPlayer2.volume = 0;
     //4 最后把 AVPlayerLayer放到self.view.layer上(也就是需要放置的视图的layer层上)
     [self.BGView.layer addSublayer:self.playerLayer2];
     [self.BGView.layer insertSublayer:self.playerLayer2 above:self.playerLayer];
@@ -459,36 +444,6 @@
     [self loadObserver:self.playerItem2];
     // 加载通知
     [self loadNotification:self.playerItem2];
-    
-//    self.playerLayer = (AVPlayerLayer *)self.layer;
-//    // 初始化playerLayer的player
-//    self.playerLayer.player = self.avPlayer;
-//    self.playerItem = [[AVPlayerItem alloc] initWithURL:self.videoURL];
-//    // 设置当前playerItem
-//    [self.avPlayer replaceCurrentItemWithPlayerItem:self.playerItem];
-//
-//    [self loadObserver:self.playerItem];
-//    // 加载通知
-//    [self loadNotification:self.playerItem];
-    
-//    self.playerLayer2 = (AVPlayerLayer *)self.layer;
-//    // 初始化playerLayer的player
-//    self.playerLayer2.player = self.avPlayer2;
-//    NSString *moviePath = [[NSBundle mainBundle] pathForResource:@"movie" ofType:@"mp4"];
-//    self.playerItem2 = [[AVPlayerItem alloc] initWithURL:[NSURL fileURLWithPath:moviePath]];
-////    self.playerItem2 = [[AVPlayerItem alloc] initWithURL:self.subVideoURL];
-//    self.playerLayer2 = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer2];
-//    self.playerLayer2.frame = CGRectMake(0, 0, 100, 80);
-////    [self.playerLayer addSublayer:self.playerLayer2];
-////    [self.layer addSublayer:self.playerLayer2];
-//
-//    // 设置当前playerItem
-//    [self.avPlayer2 replaceCurrentItemWithPlayerItem:self.playerItem2];
-    
-//    [self loadObserver:self.playerItem2];
-//    // 加载通知
-//    [self loadNotification:self.playerItem2];
-//    self.avPlayer2.volume = 0;
     
     // PlayerControlView事件
     [self playerControlViewEvent];
@@ -966,6 +921,7 @@
                 if (self.touchMinWindowVideoBtn.selected) {  // 切换后
                     self.playerLayer.frame = self.touchMinWindowVideoBtn.frame;
                 }else{ // 切换前
+                    
                     self.playerLayer2.frame = self.touchMinWindowVideoBtn.frame;
                 }
             }else if (pan.state == UIGestureRecognizerStateEnded) {

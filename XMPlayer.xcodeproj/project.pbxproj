@@ -23,6 +23,8 @@
 		960E8E952113F2CD00E36539 /* XMTextHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 960E8E942113F2CC00E36539 /* XMTextHUD.m */; };
 		960E8E982113F31B00E36539 /* XMCGSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 960E8E972113F31B00E36539 /* XMCGSize.m */; };
 		9649DB2C222E1C60008397A1 /* movie.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9649DB2B222E1C60008397A1 /* movie.mp4 */; };
+		9649DB33222E6DF3008397A1 /* LXDBacktraceLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 9649DB2F222E6DF3008397A1 /* LXDBacktraceLogger.m */; };
+		9649DB34222E6DF3008397A1 /* LXDAppFluecyMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9649DB32222E6DF3008397A1 /* LXDAppFluecyMonitor.m */; };
 		96ADBA99222CC00B0077C818 /* OttoFPSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ADBA98222CC00B0077C818 /* OttoFPSButton.m */; };
 		96ADBA9C222CFE890077C818 /* XMDemo1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ADBA9B222CFE890077C818 /* XMDemo1ViewController.m */; };
 		96ADBA9F222CFE910077C818 /* XMDemo2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ADBA9E222CFE910077C818 /* XMDemo2ViewController.m */; };
@@ -96,6 +98,10 @@
 		960E8E962113F31B00E36539 /* XMCGSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCGSize.h; sourceTree = "<group>"; };
 		960E8E972113F31B00E36539 /* XMCGSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMCGSize.m; sourceTree = "<group>"; };
 		9649DB2B222E1C60008397A1 /* movie.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = movie.mp4; sourceTree = "<group>"; };
+		9649DB2F222E6DF3008397A1 /* LXDBacktraceLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXDBacktraceLogger.m; sourceTree = "<group>"; };
+		9649DB30222E6DF3008397A1 /* LXDBacktraceLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXDBacktraceLogger.h; sourceTree = "<group>"; };
+		9649DB31222E6DF3008397A1 /* LXDAppFluecyMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXDAppFluecyMonitor.h; sourceTree = "<group>"; };
+		9649DB32222E6DF3008397A1 /* LXDAppFluecyMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXDAppFluecyMonitor.m; sourceTree = "<group>"; };
 		96ADBA97222CC00B0077C818 /* OttoFPSButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OttoFPSButton.h; sourceTree = "<group>"; };
 		96ADBA98222CC00B0077C818 /* OttoFPSButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OttoFPSButton.m; sourceTree = "<group>"; };
 		96ADBA9A222CFE890077C818 /* XMDemo1ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMDemo1ViewController.h; sourceTree = "<group>"; };
@@ -176,6 +182,7 @@
 		392BE41A1FA70C1900EBEEA8 /* XMPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				9649DB2D222E6DF3008397A1 /* LXDAppFluecyMonitor */,
 				9649DB2B222E1C60008397A1 /* movie.mp4 */,
 				96ADBA8F222CBF250077C818 /* XMTool */,
 				396EABF91FA8678C001A39E6 /* XMPlayer */,
@@ -247,6 +254,25 @@
 				960E8E912113E68B00E36539 /* XMCircleProgressLayer.m */,
 			);
 			path = XMPlayer;
+			sourceTree = "<group>";
+		};
+		9649DB2D222E6DF3008397A1 /* LXDAppFluecyMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				9649DB2E222E6DF3008397A1 /* Backtrace */,
+				9649DB31222E6DF3008397A1 /* LXDAppFluecyMonitor.h */,
+				9649DB32222E6DF3008397A1 /* LXDAppFluecyMonitor.m */,
+			);
+			path = LXDAppFluecyMonitor;
+			sourceTree = "<group>";
+		};
+		9649DB2E222E6DF3008397A1 /* Backtrace */ = {
+			isa = PBXGroup;
+			children = (
+				9649DB2F222E6DF3008397A1 /* LXDBacktraceLogger.m */,
+				9649DB30222E6DF3008397A1 /* LXDBacktraceLogger.h */,
+			);
+			path = Backtrace;
 			sourceTree = "<group>";
 		};
 		96ADBA8F222CBF250077C818 /* XMTool */ = {
@@ -433,6 +459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9649DB33222E6DF3008397A1 /* LXDBacktraceLogger.m in Sources */,
 				96ADBA9C222CFE890077C818 /* XMDemo1ViewController.m in Sources */,
 				396EAC0B1FA867D1001A39E6 /* XMRefreshView.m in Sources */,
 				96E1FAD8211302AF005508B8 /* XMPlayerView.m in Sources */,
@@ -445,6 +472,7 @@
 				96ADBAC3222D0BE10077C818 /* XMPlayerTool.m in Sources */,
 				96ADBA99222CC00B0077C818 /* OttoFPSButton.m in Sources */,
 				392BE42B1FA70C1900EBEEA8 /* main.m in Sources */,
+				9649DB34222E6DF3008397A1 /* LXDAppFluecyMonitor.m in Sources */,
 				392BE41D1FA70C1900EBEEA8 /* AppDelegate.m in Sources */,
 				960E8E982113F31B00E36539 /* XMCGSize.m in Sources */,
 				960E8E952113F2CD00E36539 /* XMTextHUD.m in Sources */,

@@ -7,9 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import "OttoFPSButton.h"
 #import "ViewController.h"
 #import "XMPlayer.h"
+#import "OttoFPSButton.h"
+#import "LXDAppFluecyMonitor.h"
 
 @interface AppDelegate ()
 
@@ -43,6 +44,9 @@
     UIColor *btnBGColor = [UIColor colorWithWhite:0.000 alpha:0.700];
     OttoFPSButton *btn = [OttoFPSButton setTouchWithFrame:frame titleFont:[UIFont systemFontOfSize:15] backgroundColor:btnBGColor backgroundImage:nil];
     [self.window addSubview:btn];
+    
+    // 卡顿监测
+    [[LXDAppFluecyMonitor sharedMonitor] startMonitoring];
     
     // 兼容ios11
     if(@available(iOS 11.0, *)){

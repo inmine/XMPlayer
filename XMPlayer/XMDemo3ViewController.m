@@ -42,7 +42,7 @@
     playerView.frame = CGRectMake(0, 0, palyerW, palyerW / 7 * 4);
     playerView.playerViewType = XMPlayerViewTwoSynVideoType;
     playerView.videoURL = [NSURL URLWithString:@"https://www.xingyi888.com/xingyi/upload/video/201806/cbc13a1ed0309138ce559dfad8de42b8ca26234c.mp4"];
-//    playerView.subVideoURL = [NSURL URLWithString:@"https://www.xingyi888.com/xingyi/upload/video/201806/cbc13a1ed0309138ce559dfad8de42b8ca26234c.mp4"];
+    playerView.subVideoURL = [NSURL URLWithString:@"https://www.xingyi888.com/xingyi/upload/video/201806/cbc13a1ed0309138ce559dfad8de42b8ca26234c.mp4"];
     [self.view addSubview:playerView];
     [playerView show];
     

@@ -139,28 +139,15 @@
         [self.bottomView addSubview:self.totalTimeLabel];
         [self.bottomView addSubview:self.playerSilder];
         
-        //滑动手势
-//        UISwipeGestureRecognizer *r3 = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(doSwipe:)];
-////        r3.direction = UISwipeGestureRecognizerDirectionRight;
-////        r3.delegate = self;
-//        [self addGestureRecognizer:r3];
-        
-//        UISwipeGestureRecognizer *r4 = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(doSwipe:)];
-//        r4.direction = UISwipeGestureRecognizerDirectionLeft;
-//        r4.delegate = self;
-//        [self addGestureRecognizer:r4];
-        
-//        self.menuShow = YES;
-//        self.timerIndex = 0;
-//        [self.timer fire];
-//        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controlViewTapGRAction:)];
-//        [self addGestureRecognizer:tapGR];
+        self.menuShow = YES;
+        self.timerIndex = 0;
+        [self.timer fire];
+        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controlViewTapGRAction:)];
+        [self addGestureRecognizer:tapGR];
         
         
         self.moveTotalX = 0;
         [self addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(slipImgPanGRAction:)]];
-        
-        
     }
     return self;
 }
@@ -173,19 +160,6 @@
     [panGR setTranslation:CGPointMake(0, 0) inView:self];
     // 计算当前中心值
     self.moveTotalX = self.moveTotalX + moveX;
-//    CGFloat centerX = CGRectGetMaxX(self.slipImgView.frame) - ProSenderW * 0.5 + moveX;
-    
-    // 防止瞬间大偏移量滑动影响显示效果
-//    if (centerX < 10) centerX = 10;
-//    if (centerX > self.bounds.size.width - 10) centerX = self.bounds.size.width - 10;
-    
-//    CGFloat GRRatio;
-//    if (self.moveTotalX >= (self.width/2.0)) {
-//        GRRatio = 1;
-//    }else{
-//        GRRatio = self.moveTotalX / (self.width/2.0);
-//    }
-    
     if (panGR.state == UIGestureRecognizerStateChanged) {
        
         if (self.tapChangeimgValue) {
@@ -200,13 +174,6 @@
         }
         self.moveTotalX = 0;
     }
-}
-
-// 滑动
--(void)doSwipe:(UISwipeGestureRecognizer *)sender{
-    
-//    CGPoint startLocation = [sender locationInView:self];
-    
 }
 
 - (void)timerRunAction
