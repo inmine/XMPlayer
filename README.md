@@ -10,6 +10,8 @@
 
 3，使用方法：
 ```
+domo1:
+
 XMPlayerView *playerView = [[XMPlayerView alloc] init];
 
 playerView.sourceImagesContainerView = (UIView *)sender;  // 当前的View
@@ -23,6 +25,7 @@ playerView.currentImage = sender.currentImage;  // 当前的图片
 playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/video/20170928/1506570773879538.mp4"];  // 当前的视频URL
 
 [playerView show];
+
 ```
 
 # 二，主要属性
@@ -110,12 +113,10 @@ playerView.videoURL = [NSURL URLWithString:@"http://www.scsaide.com/uploadfiles/
 - 2017-11-06　　保存添加视频下载到相册
 - 2018-08-06　　优化代码，优化内存
 - 2018-08-08　　解决部分文件丢失问题
+- 2019-03-05    添加dome2， demo3(初稿，未优化)
 
-# 六，计划
 
-✨ 添加手势拖动视频交互（仿微信朋友圈视频播放事件处理）
-
-# 七，更多
+# 六，更多
 
 1，如果觉得可以，请给个星星✨✨✨✨✨，谢谢🙏
 
